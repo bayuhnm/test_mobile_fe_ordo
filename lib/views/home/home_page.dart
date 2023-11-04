@@ -7,6 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:test_mobile_fe_ordo/config/colors.dart';
 import 'package:test_mobile_fe_ordo/config/typography.dart';
 import 'package:test_mobile_fe_ordo/controllers/key_performance_controller.dart';
+import 'package:test_mobile_fe_ordo/views/home/widget/leaderboards._widget.dart';
+import 'package:test_mobile_fe_ordo/views/home/widget/line_chart.dart';
+import 'package:test_mobile_fe_ordo/views/home/widget/recent_lead_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,6 +51,14 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height * 0.6,
               width: MediaQuery.of(context).size.width,
               color: mainPurple,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 150
+                  ),
+                  LineChartSample2()
+                ],
+              ),
             ),
             Container(
               margin: EdgeInsets.only(
@@ -269,62 +280,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Column(
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 72,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 9, vertical: 13),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      whiteColor.withOpacity(0),
-                                      whiteColor,
-                                      whiteColor.withOpacity(0),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color:
-                                            Color(0xFF7864E6).withOpacity(.12),
-                                        blurRadius: 19,
-                                        spreadRadius: 0,
-                                        offset: Offset(0, -1))
-                                  ]),
-                              child: Row(children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                        'assets/profile_pict/recent1.png'),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Shinta Alexandra",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: medium,
-                                          letterSpacing: -0.4),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Shinta Alexandra",
-                                          style: blackTextStyle.copyWith(
-                                              fontSize: 12,
-                                              fontWeight: medium,
-                                              letterSpacing: -0.4),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ]),
-                            )
+                            RecentLeadCard(),
+                            RecentLeadCard(),
+                            RecentLeadCard(),
                           ],
                         )
                       ],
@@ -332,35 +290,52 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Text("Leaderboards",
-                            style: blackTextStyle.copyWith(
-                              fontSize: 13,
-                              fontWeight: medium,
-                              letterSpacing: -0.3,
-                            )),
-                        Container(
-                          height: 21,
-                          width: 21,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: purpleColor.withOpacity(0.10),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: mainPurple,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Leaderboards",
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 13,
+                                  fontWeight: medium,
+                                  letterSpacing: -0.3,
+                                )),
+                            Container(
+                              height: 21,
+                              width: 21,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: purpleColor.withOpacity(0.10),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 15,
+                                  color: mainPurple,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
+                        Column(
+                          children: [
+                            LeaderboardCard(),
+                            Divider(height: 1, color: Color(0xFFE7E1EA)),
+                            LeaderboardCard(),
+                            Divider(height: 1, color: Color(0xFFE7E1EA)),
+                            LeaderboardCard(),
+                            Divider(height: 1, color: Color(0xFFE7E1EA)),
+                            LeaderboardCard(),
+                            Divider(height: 1, color: Color(0xFFE7E1EA)),
+                            LeaderboardCard(),
+                          ],
+                        )
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 500,
+                    height: 100,
                   )
                 ],
               ),
