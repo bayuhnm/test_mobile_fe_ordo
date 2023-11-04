@@ -147,6 +147,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
+        tooltipBorder: BorderSide.none,
         tooltipBgColor: darkPurple,
       )),
       minX: 0,
