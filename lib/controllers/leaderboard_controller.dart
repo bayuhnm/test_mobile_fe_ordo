@@ -19,7 +19,7 @@ class LeaderboardController extends GetxController {
         imageUrl: "assets/profile_pict/lead2.png",
         name: "Jhonatan Zegwin",
         date: "23 January 2023",
-        deals: 42,
+        deals: 41,
       ),
       LeaderboardModel(
         imageUrl: "assets/profile_pict/lead3.png",

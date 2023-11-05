@@ -12,41 +12,105 @@ class LineChartRevenue extends StatefulWidget {
 
 class _LineChartRevenueState extends State<LineChartRevenue> {
   List<Color> gradientColors = [
-    Color(0xFF7864E6),
-    Color(0xFF9447B9),
+    Color(0xFF8C38AF),
+    Color(0xFF9936A9),
     Color(0xFF9447B9).withOpacity(0),
   ];
 
   bool showAvg = false;
+  int _currentIndex = 0;
 
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+  Widget bottomTitleWidgets(String selectedView, double value, TitleMeta meta) {
     const style = TextStyle(
       color: whiteColor,
       fontFamily: 'Poppins',
       fontSize: 12,
     );
     Widget text;
-    switch (value.toInt()) {
-      case 1:
-        text = const Text('Mon', style: style);
+    switch (selectedView) {
+      case 'Daily':
+        switch (value.toInt()) {
+          case 1:
+            text = const Text('Mon', style: style);
+            break;
+          case 2:
+            text = const Text('Tue', style: style);
+            break;
+          case 3:
+            text = const Text('Wed', style: style);
+            break;
+          case 4:
+            text = const Text('Thu', style: style);
+            break;
+          case 5:
+            text = const Text('Fri', style: style);
+            break;
+          case 6:
+            text = const Text('Sat', style: style);
+            break;
+          case 7:
+            text = const Text('Sun', style: style);
+            break;
+          default:
+            text = const Text('', style: style);
+            break;
+        }
         break;
-      case 2:
-        text = const Text('Tue', style: style);
+      case 'Weekly':
+        switch (value.toInt()) {
+          case 1:
+            text = const Text('W1', style: style);
+            break;
+          case 2:
+            text = const Text('W2', style: style);
+            break;
+          case 3:
+            text = const Text('W3', style: style);
+            break;
+          case 4:
+            text = const Text('W4', style: style);
+            break;
+          case 5:
+            text = const Text('W1', style: style);
+            break;
+          case 6:
+            text = const Text('W2', style: style);
+            break;
+          case 7:
+            text = const Text('W3', style: style);
+            break;
+          default:
+            text = const Text('', style: style);
+            break;
+        }
         break;
-      case 3:
-        text = const Text('Wed', style: style);
-        break;
-      case 4:
-        text = const Text('Thu', style: style);
-        break;
-      case 5:
-        text = const Text('Fri', style: style);
-        break;
-      case 6:
-        text = const Text('Sat', style: style);
-        break;
-      case 7:
-        text = const Text('Sun', style: style);
+      case 'Monthly':
+        switch (value.toInt()) {
+          case 1:
+            text = const Text('Jan', style: style);
+            break;
+          case 2:
+            text = const Text('Feb', style: style);
+            break;
+          case 3:
+            text = const Text('Mar', style: style);
+            break;
+          case 4:
+            text = const Text('Apr', style: style);
+            break;
+          case 5:
+            text = const Text('May', style: style);
+            break;
+          case 6:
+            text = const Text('Jun', style: style);
+            break;
+          case 7:
+            text = const Text('Jul', style: style);
+            break;
+          default:
+            text = const Text('', style: style);
+            break;
+        }
         break;
       default:
         text = const Text('', style: style);
@@ -147,17 +211,17 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
                 itemBuilder: (BuildContext context) {
                   return ['Daily', 'Weekly', 'Monthly'].map((view) {
                     return PopupMenuItem<String>(
-                      value: view,
-                      child: Text(
-                        view,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 11,
-                          color:
-                              selectedView == view ? mainPurple : Colors.black,
-                        ),
-                      ),
-                    );
+                        value: view,
+                        child: Text(
+                          view,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 11,
+                            color: selectedView == view
+                                ? mainPurple
+                                : Colors.black,
+                          ),
+                        ));
                   }).toList();
                 },
               ),
@@ -170,6 +234,9 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
           child: LineChart(
             mainData(selectedView),
           ),
+        ),
+        Center(
+          child: IndicatorWidget(),
         ),
       ],
     );
@@ -218,7 +285,9 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
             showTitles: true,
             reservedSize: 30,
             interval: 1,
-            getTitlesWidget: bottomTitleWidgets,
+            getTitlesWidget: (value, meta) {
+              return bottomTitleWidgets(selectedView, value, meta);
+            },
           ),
         ),
         leftTitles: const AxisTitles(
@@ -238,7 +307,7 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor: darkPurple,
           tooltipRoundedRadius: 6,
-          tooltipPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          tooltipPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
           getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
             return touchedBarSpots.map((barSpot) {
               final value = barSpot.y;
@@ -275,6 +344,12 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
                 return true;
               }
             },
+            getDotPainter: (spot, percent, barData, index) =>
+                FlDotCirclePainter(
+                    radius: 4.5,
+                    color: whiteColor,
+                    strokeWidth: 1,
+                    strokeColor: whiteColor),
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -286,6 +361,39 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class IndicatorWidget extends StatelessWidget {
+  final int itemCount;
+  final int activeIndex;
+
+  IndicatorWidget({
+    this.itemCount = 3,
+    this.activeIndex = 1,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        itemCount,
+        (index) {
+          return Container(
+            width: 25,
+            height: 4,
+            margin: EdgeInsets.symmetric(horizontal: 2, vertical: 15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: index == activeIndex
+                  ? whiteColor
+                  : whiteColor.withOpacity(0.25),
+            ),
+          );
+        },
+      ),
     );
   }
 }

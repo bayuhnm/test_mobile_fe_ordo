@@ -49,87 +49,77 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainPurple,
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height * 0.65,
-              width: MediaQuery.of(context).size.width,
-              color: mainPurple,
-              child: Column(
+            SizedBox(height: MediaQuery.of(context).size.height * 0.065),
+            Padding(
+              padding: EdgeInsets.only(left: 30, right: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 63,
-                        ),
-                        Text(
-                          "Dashboard",
-                          style: whiteTextStyle.copyWith(
-                              fontSize: 15, fontWeight: medium),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/notification.svg',
-                              color: Colors.white,
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 33,
-                                  width: 33,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: whiteColor,
-                                  ),
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  margin: EdgeInsets.only(top: 1.5, left: 1.5),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFFA224DE),
-                                  ),
-                                ),
-                                Container(
-                                    height: 30,
-                                    width: 30,
-                                    margin:
-                                        EdgeInsets.only(top: 1.5, left: 1.5),
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(
-                                                'assets/profile_pict/profile_dashboard.png'))))
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
                   SizedBox(
-                    height: 10,
+                    width: 63,
                   ),
-                  LineChartRevenue()
+                  Text(
+                    "Dashboard",
+                    style: whiteTextStyle.copyWith(
+                        fontSize: 15, fontWeight: medium),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/notification.svg',
+                        color: Colors.white,
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 33,
+                            width: 33,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: whiteColor,
+                            ),
+                          ),
+                          Container(
+                            height: 30,
+                            width: 30,
+                            margin: EdgeInsets.only(top: 1.5, left: 1.5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFFA224DE),
+                            ),
+                          ),
+                          Container(
+                              height: 30,
+                              width: 30,
+                              margin: EdgeInsets.only(top: 1.5, left: 1.5),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/profile_pict/profile_dashboard.png'))))
+                        ],
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            LineChartRevenue(),
             Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.55),
+              // margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width,
               // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               decoration: const BoxDecoration(
@@ -316,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                    padding: EdgeInsets.only(bottom: 10, left: 30, right: 30, top: 5),
                     child: Column(
                       children: [
                         Row(
@@ -468,6 +458,7 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           height: 1,
                                           color: const Color(0xFFE7E1EA),
+                                          margin: EdgeInsets.only(left: 15),
                                         ), // Ini akan menambahkan garis horizontal di bawah item leaderboard
                                     ],
                                   );
@@ -480,7 +471,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 20,
                   )
                 ],
               ),

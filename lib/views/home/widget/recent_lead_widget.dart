@@ -62,8 +62,8 @@ class RecentLeadCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 50,
-                height: 50,
+                width: 45,
+                height: 45,
                 margin: EdgeInsets.only(right: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -87,8 +87,8 @@ class RecentLeadCard extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/icons/calendar.png", // Replace with the path to your custom icon
-                        width: 10,
-                        height: 10,
+                        width: 15,
+                        height: 15,
                         color: grey2Color, // Color for the icon
                       ),
                       SizedBox(

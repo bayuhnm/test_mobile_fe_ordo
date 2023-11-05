@@ -36,7 +36,7 @@ class LeaderboardCard extends StatelessWidget {
                 width: 15,
                 child: Text(
                   position,
-                  textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
                   style: mainTextStyle.copyWith(
                       fontSize: 22, fontWeight: semiBold),
                 ),
@@ -45,8 +45,8 @@ class LeaderboardCard extends StatelessWidget {
                 width: 15,
               ),
               Container(
-                width: 50,
-                height: 50,
+                width: 45,
+                height: 45,
                 margin: EdgeInsets.only(right: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
