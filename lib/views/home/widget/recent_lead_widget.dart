@@ -4,7 +4,35 @@ import 'package:test_mobile_fe_ordo/config/colors.dart';
 import 'package:test_mobile_fe_ordo/config/typography.dart';
 
 class RecentLeadCard extends StatelessWidget {
-  const RecentLeadCard({super.key});
+  const RecentLeadCard({
+    super.key,
+    required this.imageUrl,
+    required this.icon,
+    required this.label,
+    required this.name,
+    required this.date,
+    required this.revenue,
+  });
+
+  final String label;
+  final String imageUrl;
+  final String icon;
+  final String name;
+  final String date;
+  final String revenue;
+
+  Color getColorForIcon(String icon) {
+    switch (icon) {
+      case "assets/icons/star.svg":
+        return purpleColor;
+      case "assets/icons/flame.svg":
+        return lightRedColor;
+      case "assets/icons/snow.svg":
+        return orangeColor;
+      default:
+        return redColor;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +41,21 @@ class RecentLeadCard extends StatelessWidget {
       height: 72,
       padding: EdgeInsets.only(top: 9, bottom: 9, left: 13),
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              whiteColor.withOpacity(0),
-              whiteColor,
-              whiteColor.withOpacity(0),
-            ],
-          ),
-          boxShadow: [
-            BoxShadow(
-                color: Color(0xFF7864E6).withOpacity(.12),
-                blurRadius: 19,
-                spreadRadius: 0,
-                offset: Offset(0, -1))
-          ]),
+        // gradient: LinearGradient(
+        //   colors: [
+        //     whiteColor.withOpacity(0),
+        //     whiteColor,
+        //     whiteColor.withOpacity(0),
+        //   ],
+        // ),
+        // boxShadow: [
+        //   BoxShadow(
+        //       color: Color(0xFF7864E6).withOpacity(.12),
+        //       blurRadius: 19,
+        //       spreadRadius: 0,
+        //       offset: Offset(0, -1))
+        // ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -38,7 +67,7 @@ class RecentLeadCard extends StatelessWidget {
                 margin: EdgeInsets.only(right: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset('assets/profile_pict/recent1.png'),
+                  child: Image.asset(imageUrl),
                 ),
               ),
               Column(
@@ -46,7 +75,7 @@ class RecentLeadCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Shinta Alexandra",
+                    name,
                     style: blackTextStyle.copyWith(
                         fontSize: 12, fontWeight: medium, letterSpacing: -0.4),
                   ),
@@ -66,7 +95,7 @@ class RecentLeadCard extends StatelessWidget {
                         width: 2,
                       ),
                       Text(
-                        "31 January 2023",
+                        date,
                         style: greyTextStyle.copyWith(
                             fontSize: 11,
                             fontWeight: regular,
@@ -85,14 +114,14 @@ class RecentLeadCard extends StatelessWidget {
                 height: 22,
                 width: 83,
                 decoration: BoxDecoration(
-                    color: purpleColor,
+                    color: getColorForIcon(icon),
                     borderRadius: BorderRadius.circular(50)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                       child: SvgPicture.asset(
-                        'assets/icons/star.svg',
+                        icon,
                         color: Colors.white,
                         height: 11,
                         width: 11,
@@ -102,7 +131,7 @@ class RecentLeadCard extends StatelessWidget {
                       width: 3,
                     ),
                     Text(
-                      "New Lead",
+                      label,
                       style: whiteTextStyle.copyWith(
                           fontSize: 10, letterSpacing: -0.3),
                     ),
@@ -113,7 +142,7 @@ class RecentLeadCard extends StatelessWidget {
                 height: 6,
               ),
               Text(
-                "Rp. 13.000.000",
+                "Rp ${revenue}",
                 style: blackTextStyle.copyWith(
                     fontSize: 12, fontWeight: medium, letterSpacing: -0.4),
               )

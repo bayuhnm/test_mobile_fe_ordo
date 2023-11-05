@@ -7,6 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:test_mobile_fe_ordo/config/colors.dart';
 import 'package:test_mobile_fe_ordo/config/typography.dart';
 import 'package:test_mobile_fe_ordo/controllers/key_performance_controller.dart';
+import 'package:test_mobile_fe_ordo/controllers/leaderboard_controller.dart';
+import 'package:test_mobile_fe_ordo/controllers/recent_lead_controller.dart';
+import 'package:test_mobile_fe_ordo/models/leaderboard_model.dart';
 import 'package:test_mobile_fe_ordo/views/home/widget/leaderboards._widget.dart';
 import 'package:test_mobile_fe_ordo/views/home/widget/line_chart.dart';
 import 'package:test_mobile_fe_ordo/views/home/widget/recent_lead_widget.dart';
@@ -18,7 +21,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final keyPerformanceController = Get.put(KeyPerformanceController());
-
+  final leaderboardController = Get.put(LeaderboardController());
+  final recentLeadController = Get.put(RecentLeadController());
+  List<LeaderboardModel> sortedLeaderboard = [];
   PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
 
@@ -46,23 +51,85 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
-          children: [
+          children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.65,
               width: MediaQuery.of(context).size.width,
               color: mainPurple,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 150
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 63,
+                        ),
+                        Text(
+                          "Dashboard",
+                          style: whiteTextStyle.copyWith(
+                              fontSize: 15, fontWeight: medium),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/notification.svg',
+                              color: Colors.white,
+                              height: 20,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 33,
+                                  width: 33,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  margin: EdgeInsets.only(top: 1.5, left: 1.5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFFA224DE),
+                                  ),
+                                ),
+                                Container(
+                                    height: 30,
+                                    width: 30,
+                                    margin:
+                                        EdgeInsets.only(top: 1.5, left: 1.5),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'assets/profile_pict/profile_dashboard.png'))))
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                  LineChartSample2()
+                  SizedBox(
+                    height: 10,
+                  ),
+                  LineChartRevenue()
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.5),
+                  top: MediaQuery.of(context).size.height * 0.55),
               width: MediaQuery.of(context).size.width,
               // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               decoration: const BoxDecoration(
@@ -106,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(
-                              keyPerformanceController.leaderboardsData.length -
+                              keyPerformanceController.KeyPerformance.length -
                                   2, (index) {
                             return Container(
                               width: 44,
@@ -129,8 +196,8 @@ class _HomePageState extends State<HomePage> {
                           () => ListView.builder(
                             controller: _pageController,
                             scrollDirection: Axis.horizontal,
-                            itemCount: keyPerformanceController
-                                .leaderboardsData.length,
+                            itemCount:
+                                keyPerformanceController.KeyPerformance.length,
                             itemBuilder: (context, index) {
                               EdgeInsets margin;
                               if (index == 0) {
@@ -143,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                                     bottom: 40, top: 10, left: 10);
                               }
                               final leaderboard = keyPerformanceController
-                                  .leaderboardsData[index];
+                                  .KeyPerformance[index];
 
                               Color getColorForIcon(String icon) {
                                 switch (icon) {
@@ -278,13 +345,60 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            RecentLeadCard(),
-                            RecentLeadCard(),
-                            RecentLeadCard(),
-                          ],
-                        )
+                        SizedBox(height: 10),
+                        Obx(() {
+                          if (recentLeadController.recentLead.isEmpty) {
+                            return Center(
+                              child: Text(
+                                'Recent Lead is empty.',
+                                style: blackTextStyle.copyWith(),
+                              ),
+                            );
+                          } else {
+                            return Column(
+                              children: recentLeadController.recentLead
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                final index = entry.key;
+                                final recentLead = entry.value;
+                                final showBoxShadow = index == 1;
+                                return Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8),
+                                  decoration: showBoxShadow
+                                      ? BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              whiteColor.withOpacity(0),
+                                              whiteColor,
+                                              whiteColor.withOpacity(0),
+                                            ],
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0xFF7864E6)
+                                                  .withOpacity(.12),
+                                              blurRadius: 19,
+                                              spreadRadius: 0,
+                                              offset: Offset(0, -1),
+                                            )
+                                          ],
+                                        )
+                                      : BoxDecoration(),
+                                  child: RecentLeadCard(
+                                    name: recentLead.name,
+                                    imageUrl: recentLead.imageUrl,
+                                    date: recentLead.date,
+                                    icon: recentLead.icon,
+                                    label: recentLead.label,
+                                    revenue: recentLead.revenue,
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          }
+                        }),
+                        SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -318,18 +432,49 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            LeaderboardCard(),
-                            Divider(height: 1, color: Color(0xFFE7E1EA)),
-                            LeaderboardCard(),
-                            Divider(height: 1, color: Color(0xFFE7E1EA)),
-                            LeaderboardCard(),
-                            Divider(height: 1, color: Color(0xFFE7E1EA)),
-                            LeaderboardCard(),
-                            Divider(height: 1, color: Color(0xFFE7E1EA)),
-                            LeaderboardCard(),
-                          ],
+                        SizedBox(height: 10),
+                        Obx(
+                          () {
+                            if (leaderboardController.leaderboardList.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  'Leaderboard is empty.',
+                                  style: blackTextStyle.copyWith(),
+                                ),
+                              );
+                            } else {
+                              sortedLeaderboard = List<LeaderboardModel>.from(
+                                  leaderboardController.leaderboardList)
+                                ..sort((a, b) => b.deals.compareTo(a.deals));
+                              return Column(
+                                children: sortedLeaderboard
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  final index = entry.key + 1;
+                                  final leaderboard = entry.value;
+                                  return Column(
+                                    children: [
+                                      LeaderboardCard(
+                                        position: index.toString(),
+                                        imageUrl: leaderboard.imageUrl,
+                                        name: leaderboard.name,
+                                        date: leaderboard.date,
+                                        deals: leaderboard.deals,
+                                      ),
+                                      if (index <
+                                          sortedLeaderboard
+                                              .length) // Tambahkan baris ini
+                                        Container(
+                                          height: 1,
+                                          color: const Color(0xFFE7E1EA),
+                                        ), // Ini akan menambahkan garis horizontal di bawah item leaderboard
+                                    ],
+                                  );
+                                }).toList(),
+                              );
+                            }
+                          },
                         )
                       ],
                     ),

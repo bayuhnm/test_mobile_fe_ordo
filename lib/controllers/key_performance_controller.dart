@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:test_mobile_fe_ordo/models/key_performance_model.dart';
 
 class KeyPerformanceController extends GetxController {
-  final leaderboardsData = <KeyPerformanceModel>[].obs;
+  final KeyPerformance = <KeyPerformanceModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
 
-    leaderboardsData.assignAll([
+    KeyPerformance.assignAll([
       KeyPerformanceModel(
         icon: "assets/icons/store.svg",
         iconColor: "purpleColor",
@@ -28,21 +28,21 @@ class KeyPerformanceController extends GetxController {
         iconColor: "green1Color",
         titleKey: "Total Deals",
         jumlahDeals: 100,
-        percentage: "+1.25%",
+        percentage: "0%",
       ),
       KeyPerformanceModel(
         icon: "assets/icons/store.svg",
         iconColor: "purpleColor",
-        titleKey: "Total Lead",
-        jumlahDeals: 57,
-        percentage: "3.5%",
+        titleKey: "Latest Lead",
+        jumlahDeals: 69,
+        percentage: "+7.5%",
       ),
       KeyPerformanceModel(
         icon: "assets/icons/flame.svg",
         iconColor: "lightRedColor",
-        titleKey: "Hot Lead",
-        jumlahDeals: 28,
-        percentage: "1.25%",
+        titleKey: "Hot Deals",
+        jumlahDeals: 18,
+        percentage: "-0.15%",
       ),
     ]);
   }
