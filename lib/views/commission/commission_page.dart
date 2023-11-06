@@ -16,20 +16,20 @@ class CommissionPage extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-         SizedBox(
+          SizedBox(
               width: 200,
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   style: blackTextStyle.copyWith(
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
                   ),
                   children: const [
                     TextSpan(text: "Sorry, our "),
                     TextSpan(
                       text: "Commission Page",
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: mainPurple,
                       ),
                     ),

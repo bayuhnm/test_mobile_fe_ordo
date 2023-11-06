@@ -23,13 +23,13 @@ class ProfilePage extends StatelessWidget {
                 text: TextSpan(
                   style: blackTextStyle.copyWith(
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
                   ),
                   children: const [
                     TextSpan(text: "Sorry, our "),
                     TextSpan(
                       text: "Profile Page",
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: mainPurple,
                       ),
                     ),

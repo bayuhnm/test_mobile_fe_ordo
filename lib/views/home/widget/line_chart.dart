@@ -12,13 +12,12 @@ class LineChartRevenue extends StatefulWidget {
 
 class _LineChartRevenueState extends State<LineChartRevenue> {
   List<Color> gradientColors = [
-    Color(0xFF8C38AF),
-    Color(0xFF9936A9),
-    Color(0xFF9447B9).withOpacity(0),
+    const Color(0xFF8C38AF),
+    const Color(0xFF9936A9),
+    const Color(0xFF9447B9).withOpacity(0),
   ];
 
   bool showAvg = false;
-  int _currentIndex = 0;
 
   Widget bottomTitleWidgets(String selectedView, double value, TitleMeta meta) {
     const style = TextStyle(
@@ -150,15 +149,15 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
   ];
 
   List<FlSpot> monthlyData = [
-    FlSpot(0, 30),
-    FlSpot(1, 29),
-    FlSpot(2, 32),
-    FlSpot(3, 31),
-    FlSpot(4, 30),
-    FlSpot(5, 28),
-    FlSpot(6, 27),
-    FlSpot(7, 26),
-    FlSpot(8, 25),
+    FlSpot(0, 5),
+    FlSpot(1, 10),
+    FlSpot(2, 15),
+    FlSpot(3, 20),
+    FlSpot(4, 25),
+    FlSpot(5, 30),
+    FlSpot(6, 32),
+    FlSpot(7, 33),
+    FlSpot(8, 34),
   ];
 
   @override
@@ -189,11 +188,7 @@ class _LineChartRevenueState extends State<LineChartRevenue> {
                 ],
               ),
               PopupMenuButton<String>(
-                offset: Offset(-15, 35),
-                // constraints: BoxConstraints(
-                //   minHeight: 99,
-                //   maxHeight: 99,
-                // ),
+                offset: const Offset(-15, 35),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),

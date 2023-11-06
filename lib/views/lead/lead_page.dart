@@ -23,13 +23,13 @@ class LeadPage extends StatelessWidget {
                 text: TextSpan(
                   style: blackTextStyle.copyWith(
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
                   ),
                   children: const [
                     TextSpan(text: "Sorry, our "),
                     TextSpan(
-                      text: "Leaderboard Page",
+                      text: "Lead Page",
                       style: TextStyle(
+                    fontWeight: FontWeight.bold,
                         color: mainPurple,
                       ),
                     ),
