@@ -86,10 +86,10 @@ class RecentLeadCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
-                        "assets/icons/calendar.png", // Replace with the path to your custom icon
+                        "assets/icons/calendar.png", 
                         width: 15,
                         height: 15,
-                        color: grey2Color, // Color for the icon
+                        color: grey2Color, 
                       ),
                       SizedBox(
                         width: 2,

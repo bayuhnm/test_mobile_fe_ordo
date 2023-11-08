@@ -454,12 +454,12 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       if (index <
                                           sortedLeaderboard
-                                              .length) // Tambahkan baris ini
+                                              .length) 
                                         Container(
                                           height: 1,
                                           color: const Color(0xFFE7E1EA),
                                           margin: EdgeInsets.only(left: 15),
-                                        ), // Ini akan menambahkan garis horizontal di bawah item leaderboard
+                                        ),
                                     ],
                                   );
                                 }).toList(),
